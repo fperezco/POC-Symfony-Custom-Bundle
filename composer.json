@@ -1,0 +1,28 @@
+{
+    "name": "paco/custom-paco-bundle",
+    "description": "Example of bundle, just a random number with random string service",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jonytrifulca",
+            "email": "jonytrifulca@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Paco\\CustomPacoBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Paco\\CustomPacoBundle\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^5.2"
+    }
+}
