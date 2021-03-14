@@ -1,0 +1,31 @@
+# config/services.yaml
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+#  Paco\CustomPacoBundle\:
+#    resource: '../../../src/*'
+#    exclude: '../../../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+
+
+  custom_paco_bundle.meeting_message_provider:
+    class: Paco\CustomPacoBundle\MeetingMessageProvider
+    public: true
+
+  # the id is not a class, so it won't be used for autowiring
+  custom_paco_bundle.paco_number_generator:
+    class: Paco\CustomPacoBundle\PacoNumberGenerator
+    arguments: ['@custom_paco_bundle.meeting_message_provider']
+    public: true
+
+  # but this fixes it!
+  # the ``app.rot13.transformer`` service will be injected when
+  # an ``App\Util\Rot13Transformer`` type-hint is detected
+  Paco\CustomPacoBundle\PacoNumberGenerator: '@custom_paco_bundle.paco_number_generator'
+
+
+  Paco\CustomPacoBundle\MeetingMessageProvider: '@custom_paco_bundle.meeting_message_provider'
