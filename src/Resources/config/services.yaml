@@ -11,7 +11,7 @@ services:
 #    resource: '../../../src/*'
 #    exclude: '../../../src/{DependencyInjection,Entity,Tests,Kernel.php}'
 
-
+  #message provider as service
   custom_paco_bundle.meeting_message_provider:
     class: Paco\CustomPacoBundle\MeetingMessageProvider
     public: true
@@ -27,5 +27,16 @@ services:
   # an ``App\Util\Rot13Transformer`` type-hint is detected
   Paco\CustomPacoBundle\PacoNumberGenerator: '@custom_paco_bundle.paco_number_generator'
 
-
   Paco\CustomPacoBundle\MeetingMessageProvider: '@custom_paco_bundle.meeting_message_provider'
+
+  #controller as service
+  #When you create a controller in a reusable bundle, the best practice is to register your
+  #controller as a proper service and use dependency injection to get anything you need
+  custom_paco_bundle.number_generator_api_controller:
+      class: Paco\CustomPacoBundle\Controller\NumberGeneratorApiController
+      arguments: ['@custom_paco_bundle.paco_number_generator']
+      public: true
+      calls:
+        -   [ setContainer,["@service_container"] ]
+      tags:
+        - name: 'container.service_subscriber'

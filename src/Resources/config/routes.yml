@@ -1,0 +1,3 @@
+paco_number_generator_api:
+  path: /
+  controller: custom_paco_bundle.number_generator_api_controller:index
