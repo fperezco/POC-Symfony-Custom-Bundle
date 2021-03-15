@@ -4,6 +4,7 @@
 namespace Paco\CustomPacoBundle\Controller;
 
 use Paco\CustomPacoBundle\Event\FilterApiResponseEvent;
+use Paco\CustomPacoBundle\Event\PacoNumberGeneratorEvents;
 use Paco\CustomPacoBundle\PacoNumberGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -30,7 +31,8 @@ class NumberGeneratorApiController extends AbstractController
         $event = new FilterApiResponseEvent($data);
         //because maybe there aren't anyone listen to it.
         if($this->eventDispatcher){
-            $this->eventDispatcher->dispatch('paco_number_generator.filter_api', $event);
+            //$this->eventDispatcher->dispatch($event,'paco_number_generator.filter_api');
+            $this->eventDispatcher->dispatch($event,PacoNumberGeneratorEvents::FILTER_API);
         }
 
         return $this->json($event->getData());
