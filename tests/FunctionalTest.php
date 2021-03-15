@@ -18,14 +18,14 @@ class FunctionalTest extends TestCase
     public function testServiceWiring()
     {
         //this 3 lines to boot a real symfony app
-        $kernel = new RealSymfonyAPPTestingKernel('test', true);
+        $kernel = new RealSymfonyAPPTestingKernel();
         $kernel->boot();
         $container = $kernel->getContainer();
 
         //we test that there is a right wiring
         $ipsum = $container->get('custom_paco_bundle.paco_number_generator');
         $this->assertInstanceOf(PacoNumberGenerator::class, $ipsum);
-        $this->assertInternalType('string', $ipsum->getNumber());
+        $this->assertIsString( $ipsum->getNumber());
     }
 
     public function testServiceWiringWithConfiguration()
@@ -39,7 +39,7 @@ class FunctionalTest extends TestCase
 
         //test that the service injected is the correct service
         $ipsum = $container->get('custom_paco_bundle.paco_number_generator');
-        $this->assertContains('fake', $ipsum->getNumber());
+        $this->assertStringContainsString('fake', $ipsum->getNumber());
     }
 
 
