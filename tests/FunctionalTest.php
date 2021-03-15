@@ -9,6 +9,7 @@ use Paco\CustomPacoBundle\Interfaces\MeetingMessageProviderInterface;
 use Paco\CustomPacoBundle\PacoNumberGenerator;
 use Paco\CustomPacoBundle\PacoNumberGeneratorBundle;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
@@ -73,6 +74,7 @@ class RealSymfonyAPPTestingKernel extends Kernel
     public function registerBundles()
     {
         return [
+            new FrameworkBundle(), //due to we are using EventDispatcher
             new PacoNumberGeneratorBundle(),
         ];
     }

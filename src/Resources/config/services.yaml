@@ -34,7 +34,7 @@ services:
   #controller as a proper service and use dependency injection to get anything you need
   custom_paco_bundle.number_generator_api_controller:
       class: Paco\CustomPacoBundle\Controller\NumberGeneratorApiController
-      arguments: ['@custom_paco_bundle.paco_number_generator']
+      arguments: ['@custom_paco_bundle.paco_number_generator','@event_dispatcher']
       public: true
       calls:
         -   [ setContainer,["@service_container"] ]
