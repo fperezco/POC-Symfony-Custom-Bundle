@@ -10,13 +10,20 @@ class PacoNumberGenerator
 {
     private $baseNumber;
     private $topNumber;
-    private $meetingMessageProvider;
+    /**
+     * @var MeetingMessageProviderInterface[]
+     */
+    private $meetingMessageProviders;
 
-    public function __construct(MeetingMessageProviderInterface $meetingMessageProvider, $baseNumber = 0, $topNumber = 100)
+    //the idea is calculate the greeting list just 1 time
+    //using all the services tagged to produce words for the  bundle
+    private $greetingList;
+
+    public function __construct(array $meetingMessageProviders, $baseNumber = 0, $topNumber = 100)
     {
         $this->baseNumber = $baseNumber;
         $this->topNumber = $topNumber;
-        $this->meetingMessageProvider = $meetingMessageProvider;
+        $this->meetingMessageProviders = $meetingMessageProviders;
     }
 
     public function getNumber()
@@ -27,8 +34,26 @@ class PacoNumberGenerator
         return $randomMeetingWord." ". $randomNumber;
     }
 
+    // old method for a single service
+    /*
     private function getWordList(): array
     {
         return $this->meetingMessageProvider->getWordList();
+    }
+    */
+
+    private function getWordList(): array
+    {
+        if (null === $this->greetingList) {
+            $words = [];
+            foreach ($this->meetingMessageProviders as $meetingProvider) {
+                $words = array_merge($words, $meetingProvider->getWordList());
+            }
+            if (count($words) <= 1) {
+                throw new \Exception('Word list must contain at least 2 words, yo!');
+            }
+            $this->greetingList = $words;
+        }
+        return $this->greetingList;
     }
 }
