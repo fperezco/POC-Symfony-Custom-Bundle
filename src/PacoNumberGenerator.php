@@ -19,7 +19,7 @@ class PacoNumberGenerator
     //using all the services tagged to produce words for the  bundle
     private $greetingList;
 
-    public function __construct(array $meetingMessageProviders, $baseNumber = 0, $topNumber = 100)
+    public function __construct(iterable $meetingMessageProviders, $baseNumber = 0, $topNumber = 100)
     {
         $this->baseNumber = $baseNumber;
         $this->topNumber = $topNumber;
@@ -28,9 +28,13 @@ class PacoNumberGenerator
 
     public function getNumber()
     {
-        $randomMeetingIndex = array_rand($this->meetingMessageProvider->getWordList(), 1);
+        //$randomMeetingIndex = array_rand($this->meetingMessageProviders->getWordList(), 1);
+        //now with the tags we have to use the caculated array
+        $this->getWordList();
+        $randomMeetingIndex = array_rand($this->greetingList, 1);
+        $randomMeetingWord = $this->greetingList[$randomMeetingIndex];
+
         $randomNumber = random_int($this->baseNumber, $this->topNumber);
-        $randomMeetingWord = $this->meetingMessageProvider->getWordList()[$randomMeetingIndex];
         return $randomMeetingWord." ". $randomNumber;
     }
 
