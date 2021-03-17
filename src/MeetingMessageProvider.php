@@ -11,11 +11,8 @@ class MeetingMessageProvider implements MeetingMessageProviderInterface
     public function getWordList(): array
     {
         return [
-            'Hi adorable ',
-            'Hi active ',
-            'Hi admire ',
-            'Hi adventurous ',
-            'Hi agreeable ',
+            'Hi adorable inside ',
+            'Hi active inside ',
         ];
     }
 }
