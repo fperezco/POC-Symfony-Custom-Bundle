@@ -15,11 +15,15 @@ services:
   custom_paco_bundle.meeting_message_provider:
     class: Paco\CustomPacoBundle\MeetingMessageProvider
     public: true
+    tags:
+      - { name: 'paco.meeting_provider', priority: 10 }
 
   # the id is not a class, so it won't be used for autowiring
   custom_paco_bundle.paco_number_generator:
     class: Paco\CustomPacoBundle\PacoNumberGenerator
-    arguments: ['@custom_paco_bundle.meeting_message_provider']
+    #arguments: ['@custom_paco_bundle.meeting_message_provider']
+    arguments:
+      - !tagged_iterator paco.meeting_provider
     public: true
 
   # but this fixes it!
